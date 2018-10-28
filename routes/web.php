@@ -17,21 +17,22 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('home', 'HomeController@index')->name('home');
+Route::get('home', 'ChannelController@select')->name('home');
 
 Route::get('Channels/{id?}', 'ChannelController@select')->name('Channels');
 
-Route::get('Channels/{channel_id}/Chart/{chart_num}','ChannelController@displayChart')->name('Chart');
-
-
-Route::get('Channels/{channel_id}/DataCount/{chart_num}','ChannelController@DataCount')->name('DataCount');
-Route::get('Channels/{channel_id}/Data/{chart_num}','ChannelController@findChartData')->name('Data');
-
-
+Route::get('Channels/{id}/Chart/{chart_num}','ChannelController@displayChart')->name('Chart');
 
 Route::get('Update','ChannelController@insertChartData')->name('insert');
+
+Route::get('Channels/{id}/DataCount/{chart_num}','ChannelController@DataCount')->name('DataCount');
+Route::get('Channels/{id}/Data/{chart_num}','ChannelController@findChartData')->name('Data');
+
+
+
 
 
 Route::post('Channels/CreateChannel', 'ChannelController@CreateChannel')->name('CreChannel');
 Route::post('Channel/EditChannel','ChannelController@EditChannel')->name('EdtChannel');
+Route::post('Channel/EditChart','ChannelController@EditChart')->name('EdtChart');
 

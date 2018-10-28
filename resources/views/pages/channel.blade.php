@@ -71,15 +71,25 @@
             @for($i=0;$i<count($charts);$i++)
                 <div class="chart-box">
                     <div class="txt-c chart-name">
-                        <i class="txt-1">{{$charts[$i]['name']}}</i>
+                        <i class="txt-1">Chart{{$i+1}}</i>
                         <a href="javascript:void(this)"
-                           data-reiframe-btn="ifr{{$i}}"
-                           onclick="reloadIframe(this)"
-                           class="right">
-                            <i class="fas fa-redo-alt"></i>
+                        data-reiframe-btn="ifr{{$i}}"
+                        onclick="reloadIframe(this)"
+                        class="right">
+                        <i class="fas fa-redo-alt"></i>
                         </a>
                         @if($isOwner)
-                            <a class="right" href="javascript:void(this)">
+                            <a href="{{ route('Data',[$channel['id'] , $i+1 , 'key'=>$channel['readkey'] ]) }}"
+                                target="_blank"
+                                data-reiframe-btn="ifr{{$i}}"
+                                onclick="reloadIframe(this)"
+                                class="right">
+                                <i class="fas fa-database"></i>
+                            </a>
+                            <a id="EditChart{{$i}}Btn"
+                                data-modal-btn="EditChart{{$i}}Modal"
+                                onclick="chgModal(this)"
+                                class="right" href="javascript:void(this)">
                                 <i class="fas fa-edit"></i>
                             </a>
                         @endif
@@ -92,7 +102,7 @@
                                 src="
                                 {{
                                     route('Chart',[
-                                    'channel_id'=>$charts[$i]['channel_id'],
+                                    'id'=>$charts[$i]['id'],
                                     'chart_num'=>$i+1,
                                     'name'=>$charts[$i]['name'],
                                     'type'=>$charts[$i]['type'],
@@ -121,7 +131,7 @@
                             @csrf
                             <div class="card-header">EditChannelDetail</div>
                             <div class="card-body">
-                                <input type="text" name="channel_id" value="{{$channel['id']}}" style="display: none">
+                                <input type="text" name="id" value="{{$channel['id']}}" style="display: none">
                                 <div class="row">
                                     <label class="col-4 txt-right">ChannelName</label>
                                     <div class="col-6">
@@ -144,8 +154,9 @@
                                     <label class="col-4 txt-right">VideoUrlIframe</label>
                                     <div class="col-6">
                                         <textarea
+                                            maxlength="500"
                                             name="video_url" rows="2">
-                                            {{$channel['video_url']}}
+                                                {{$channel['video_url']}}
                                         </textarea>
                                     </div>
                                 </div>
@@ -157,6 +168,7 @@
                                     </label>
                                     <div class="col-6">
                                         <textarea
+                                            maxlength="100"
                                             name="description" rows="2">
                                             {{$channel['description']}}
                                         </textarea>
@@ -174,6 +186,68 @@
             </div>
         </div>
     </div>
+    @for($i=0;$i<count($charts);$i++)
+    <div id="EditChart{{$i}}Modal" class="modal" data-modal="EditChart{{$i}}Modal">
+        <div class="container-m">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="row">
+                    <div class="txt-2">
+                        <form method="post" action="{{route('EdtChart')}}">
+                            @csrf
+                            <div class="card-header">EditChartDetail</div>
+                            <div class="card-body">
+                                <input type="text" name="chart_num" value="{{$i+1}}" style="display: none">
+                                <input type="text" name="id" value="{{$channel['id']}}" style="display: none">
+                                <div class="row">
+                                    <label class="col-4 txt-right">ChartName</label>
+                                    <div class="col-6">
+                                        <input
+                                            type="text" name="chart_name" value="{{$charts[$i]['name']}}" required>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-4 txt-right">is_dynamic</label>
+                                    <div class="col-6">
+                                        <input
+                                            type="checkbox" name="is_dynamic"
+                                            @if($charts[$i]['is_dynamic'])
+                                            checked
+                                            @endif
+                                        >
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-4 txt-right">is_rounding</label>
+                                    <div class="col-6">
+                                        <input
+                                            type="checkbox" name="is_rounding"
+                                            @if($charts[$i]['is_rounding'])
+                                            checked
+                                            @endif
+                                        >
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-4 txt-right">results</label>
+                                    <div class="col-6">
+                                        <input
+                                            type="text" name="results" value="{{$charts[$i]['results']}}" required>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-10 txt-center">
+                                        <button type="submit">Edit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endfor
     <script type="text/javascript">
 
         function reloadIframe(elem) {

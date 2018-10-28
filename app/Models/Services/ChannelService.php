@@ -77,7 +77,11 @@ class ChannelService
     }
 
 
-
+    public function EditChart($chart_num,$channel_id, $chart_name, $type, $is_dynamic, $is_rounding, $results)
+    {
+        $ChartRepository = new AllChartRepository($chart_num);
+        $ChartRepository->SetDetail($channel_id, $chart_name, $type, $is_dynamic, $is_rounding, $results);
+    }
 
 
 

@@ -49,11 +49,11 @@ class AllChartRepository
      * 創建chart
      * @return void
      */
-    public function Create($channel_id, $chart_name)
+    public function Create($id, $chart_name)
     {
         $this->chart_table
             ->create([
-                'channel_id' => $channel_id,
+                'id' => $id,
                 'name'       => $chart_name,
             ]);
     }
@@ -61,13 +61,13 @@ class AllChartRepository
      * chart的細項設定
      * @return void
      */
-    public function SetDetail($channel_id, $chart_name, $type, $is_dynamic, $is_rounding, $results)
+    public function SetDetail($id, $chart_name, $type, $is_dynamic, $is_rounding, $results)
     {
         $this->chart_table
-            ->orderBy('channel_id', 'asc')
-            ->find($channel_id)
+            ->orderBy('id', 'asc')
+            ->find($id)
             ->update([
-                'chart_name'  => $chart_name,
+                'name'  => $chart_name,
                 'type'        => $type,
                 'is_dynamic'  => $is_dynamic,
                 'is_rounding' => $is_rounding,
@@ -76,12 +76,12 @@ class AllChartRepository
     }
 
     /**
-     * 找出所有屬於channel_id的charts
+     * 找出所有屬於id的charts
      * @return array
      */
-    public function FindChart($channel_id)
+    public function FindChart($id)
     {
-        return $this->chart_table->orderBy('channel_id', 'asc')->where('channel_id', '=', $channel_id)->get();
+        return $this->chart_table->orderBy('id', 'asc')->where('id', '=', $id)->get();
     }
 
 }

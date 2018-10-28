@@ -48,19 +48,19 @@ class AllDataRepository
      * 創建data
      * @return void
      */
-    public function CreateData($channel_id, $value)
+    public function CreateData($id, $value)
     {
         $this->data_table->create([
-            'channel_id' => $channel_id,
+            'id' => $id,
             'value'      => $value,
         ]);
     }
     /**
-     * 找出所有屬於channel_id的datas
+     * 找出所有屬於id的datas
      * @return array
      */
-    public function GetDataByChannelId($channel_id)
+    public function GetDataByChannelId($id)
     {
-        return $this->data_table->orderBy('created_at', 'asc')->where('channel_id', '=', $channel_id)->get();
+        return $this->data_table->orderBy('created_at', 'asc')->where('id', '=', $id)->get();
     }
 }

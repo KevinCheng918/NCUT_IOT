@@ -27,7 +27,11 @@ class Data3 extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['channel_id', 'value'];
+    protected $fillable = ['id', 'value'];
 
     // protected $guarded =[];
+
+    protected $hidden = [
+        'id','deleted_at','updated_at',
+    ];
 }

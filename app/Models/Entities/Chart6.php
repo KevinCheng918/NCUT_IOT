@@ -35,7 +35,7 @@ class Chart6 extends Model
     protected $dates = ['deleted_at'];
 
     protected $fillable = [
-        'channel_id',
+        'id',
         'name',
         'type',
         'is_dynamic',
@@ -44,4 +44,9 @@ class Chart6 extends Model
     ];
 
     // protected $guarded =[];
+
+
+    protected $hidden = [
+        'deleted_at',
+    ];
 }

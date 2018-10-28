@@ -42,11 +42,11 @@
 
                         <div class="row">
                             <div class="col-10 txt-center">
-                                    <input type="checkbox" name="remember" id="remember">
+                                    {{--<input type="checkbox" name="remember" id="remember">--}}
 
-                                    <label for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
+                                    {{--<label for="remember">--}}
+                                        {{--{{ __('Remember Me') }}--}}
+                                    {{--</label>--}}
                             </div>
                         </div>
 
@@ -56,9 +56,9 @@
                                     {{ __('Login') }}
                                 </button>
 
-                                <a href="{{ route('password.request') }}">
-                                    {{ __('Forgot Your Password?') }}
-                                </a>
+                                {{--<a href="{{ route('password.request') }}">--}}
+                                    {{--{{ __('Forgot Your Password?') }}--}}
+                                {{--</a>--}}
                             </div>
                         </div>
                     </form>

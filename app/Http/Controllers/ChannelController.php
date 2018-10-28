@@ -35,12 +35,32 @@ class ChannelController extends Controller
         if (Auth::check()) {
             $this->ChannelService
                 ->EditChannel(
-                    $request['channel_id'],
+                    $request['id'],
                     $request['channel_name'],
                     $request['description'],
                     $request['is_show_video'] == 'on' ? 1 : 0,
                     $request['video_url']
                 );
+            return redirect(url()->previous());
+        } else {
+            return view('pages.home');
+        }
+    }
+
+    public function EditChart(Request $request)
+    {
+        
+        if (Auth::check()) {
+            $this->ChannelService
+                ->EditChart(
+                    $request['chart_num'],
+                    $request['id'],
+                    $request['chart_name'],
+                    $type='line',
+                    $request['is_dynamic'] == 'on' ? 1 : 0,
+                    $request['is_rounding']== 'on' ? 1 : 0,
+                    $request['results']
+                    );
             return redirect(url()->previous());
         } else {
             return view('pages.home');
@@ -71,17 +91,17 @@ class ChannelController extends Controller
         }
     }
 
-    public function displayChart($channel_id, $chart_num)
+    public function displayChart($id, $chart_num)
     {
         if (Auth::check()) {
-            if ($this->ChannelService->GetChannelById($channel_id)['user_id'] == Auth::user()->id) {
+            if ($this->ChannelService->GetChannelById($id)['user_id'] == Auth::user()->id) {
                 $name = $_GET['name'];
                 $type = $_GET['type'];
                 $is_dynamic = $_GET['is_dynamic'];
                 $is_rounding = $_GET['is_rounding'];
                 $results = $_GET['results'];
                 return view('pages.chart')
-                    ->with('channel_id', $channel_id)
+                    ->with('id', $id)
                     ->with('chart_num', $chart_num)
                     ->with('name', $name)
                     ->with('type', $type)
@@ -96,30 +116,30 @@ class ChannelController extends Controller
         }
     }
 
-    public function DataCount($channel_id, $chart_num)
+    public function DataCount($id, $chart_num)
     {
 
         if (isset($_GET['key']) && $_GET['key'] != null && $_GET['key'] != ''
-            && $_GET['key'] == $this->ChannelService->GetChannelById($channel_id)['readkey']) {
+            && $_GET['key'] == $this->ChannelService->GetChannelById($id)['readkey']) {
 
-            return json_encode($this->ChannelService->GetDataCountByChannelId($chart_num, $channel_id));
+            return response(json_encode($this->ChannelService->GetDataCountByChannelId($chart_num, $id)));
 
         } elseif (Auth::check()
-            && $this->ChannelService->GetChannelById($channel_id)['user_id'] == Auth::user()->id) {
+            && $this->ChannelService->GetChannelById($id)['user_id'] == Auth::user()->id) {
 
-                return json_encode($this->ChannelService->GetDataCountByChannelId($chart_num, $channel_id));
+                return response(json_encode($this->ChannelService->GetDataCountByChannelId($chart_num, $id)));
 
         } else {
-            return 'Ae';
+            return response('Ae');
         }
     }
 
-    public function findChartData($channel_id, $chart_num)
+    public function findChartData($id, $chart_num)
     {
         if (isset($_GET['key']) && $_GET['key'] != null && $_GET['key'] != ''
-            && $_GET['key'] == $this->ChannelService->GetChannelById($channel_id)['readkey']) {
+            && $_GET['key'] == $this->ChannelService->GetChannelById($id)['readkey']) {
 
-                $data = $this->ChannelService->GetDataByChannelId($chart_num, $channel_id);
+                $data = $this->ChannelService->GetDataByChannelId($chart_num, $id);
                 if (isset($_GET['results']) && $_GET['results'] != null && $_GET['results'] != '') {
                     $results = $_GET['results'];
                     if ($results > count($data)) {
@@ -131,12 +151,12 @@ class ChannelController extends Controller
                     }
                     $data = $arr;
                 }
-                return json_encode($data);
+                return response(json_encode($data));
 
         } elseif (Auth::check()
-            && $this->ChannelService->GetChannelById($channel_id)['user_id'] == Auth::user()->id) {
+            && $this->ChannelService->GetChannelById($id)['user_id'] == Auth::user()->id) {
 
-                $data = $this->ChannelService->GetDataByChannelId($chart_num, $channel_id);
+                $data = $this->ChannelService->GetDataByChannelId($chart_num, $id);
 
                 if (isset($_GET['results']) && $_GET['results'] != null && $_GET['results'] != '') {
 
@@ -150,10 +170,10 @@ class ChannelController extends Controller
                     }
                     $data = $arr;
                 }
-                return json_encode($data);
+                return response(json_encode($data));
 
         } else {
-            return 'Ae';
+            return response('Ae');
         }
     }
 
@@ -166,9 +186,9 @@ class ChannelController extends Controller
                     $this->ChannelService->InsertData($_GET['key'], $i, $_GET["chart$i"]);
                 }
             }
-            return 'Su';
+            return response('Su');
         } else {
-            return 'Ae';
+            return response('Ae');
         }
     }
 }

@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh-hant">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
@@ -22,11 +21,10 @@
     var last_data_count = 0;
 
     window.onload = function () {
-        $.getJSON('{{route('DataCount',[$channel_id,$chart_num])}}', function (count) {
+        $.getJSON('{{route('DataCount',[$id,$chart_num])}}', function (count) {
             if (count >= 0){
                 last_data_count = count;
-                $.getJSON('{{route('Data',[$channel_id,$chart_num,'results'=>$results])}}', function (db_data) {
-
+                $.getJSON('{{route('Data',[$id,$chart_num,'results'=>$results])}}', function (db_data) {
                     var data = [];
                     for (i = 0; i < db_data.length; i++) {
                         var time = new Date(db_data[i].created_at).getTime(),
@@ -37,13 +35,10 @@
                         });
                     }
                     initchart(data);
-
                 });
             }
-
         });
     }
-
     function initchart(db_data) {
         Highcharts.setOptions({
             global: {
@@ -55,11 +50,9 @@
                 type: '{{$type}}',
                 events: {
                     load: function () {
-
                         var s = this.series[0];
                         setInterval(function () {
-                            $.getJSON('{{route('DataCount',[$channel_id,$chart_num])}}', function (count) {
-
+                            $.getJSON('{{route('DataCount',[$id,$chart_num])}}', function (count) {
                                 /*chart 更新設定 shift為是否左移 */
                                     @if($is_dynamic)
                                 var shift = true;
@@ -69,7 +62,6 @@
                                 if (db_data.length < {{$results}}) {
                                     shift = false;
                                 }
-
                                 if (count < 0) ;
                                 else if (count < last_data_count && count == 0) {
                                     location.reload();
@@ -78,7 +70,7 @@
                                 else {
                                     var data_count = count - last_data_count;
                                     last_data_count = count;
-                                    $.getJSON('{{route('Data',[$channel_id,$chart_num,'results'=>''])}}' + data_count, function (update_db_data) {
+                                    $.getJSON('{{route('Data',[$id,$chart_num,'results'=>''])}}' + data_count, function (update_db_data) {
                                         for (let i = 0; i < data_count; i++) {
                                             var time = new Date(update_db_data[i].created_at).getTime(),
                                                 value = parseFloat(update_db_data[i].value);
@@ -86,7 +78,6 @@
                                         }
                                     });
                                 }
-
                             });
                         }, 3000);
                     }

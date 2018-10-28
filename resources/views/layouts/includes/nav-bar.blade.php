@@ -8,9 +8,9 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('home') }}">
+                    {{-- <a href="{{ route('home') }}">
                         Home
-                    </a>
+                    </a> --}}
                 </li>
             </ul>
             <ul class="right">
@@ -28,17 +28,17 @@
                         <a href="{{ route('Channels') }}">Channels</a>
                     </li>
                 @endauth
-                <li class="dropdown">
+                {{-- <li class="dropdown">
                     <a href="javascript:void(0)" class="dropdown-btn">
                         Description  <i class="fas fa-caret-down"></i>
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-link" href="#">About?</a>
-                        <a class="dropdown-link" href="#">About?</a>
+                        <a class="dropdown-link" href="#">About WriteKey</a>
+                        <a class="dropdown-link" href="#">About ReadKey</a>
                         <a class="dropdown-link" href="#">About?</a>
                         <a class="dropdown-link" href="#">About?</a>
                     </div>
-                </li>
+                </li> --}}
             </ul>
 
             <ul class="right">

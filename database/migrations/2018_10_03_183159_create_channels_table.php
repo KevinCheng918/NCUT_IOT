@@ -33,7 +33,7 @@ class CreateChannelsTable extends Migration
 
             $table->boolean('is_show_video')->default(false);
 
-            $table->string('video_url', 100)->nullable();
+            $table->string('video_url', 500)->nullable();
 
             $table->integer('update_count')->unsigned()->default(0);
 

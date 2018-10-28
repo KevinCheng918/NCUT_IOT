@@ -50,12 +50,12 @@ class Channel extends Model
         'description',
         'is_show_video',
         'video_url',
-        'update_count'
+        'update_count',
     ];
 
     // protected $guarded =['*'];
 
     protected $hidden = [
-        'readkey', 'writekey',
+        'readkey', 'writekey','deleted_at',
     ];
 }

@@ -4,6 +4,7 @@ body{
     background-color: #eeeeee;
     font-family: Consolas;
     font-style: italic;
+    min-width: 600px;
 }
 *{
     margin: 0;

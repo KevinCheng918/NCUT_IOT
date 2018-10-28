@@ -14,9 +14,9 @@ class Create4ChartsTable extends Migration
     public function up()
     {
         Schema::create('_4__charts', function (Blueprint $table) {
-            $table->integer('channel_id')->unsigned()->unique('channel_id');
+            $table->integer('id')->unsigned()->primary('id');
 
-            $table->foreign('channel_id')
+            $table->foreign('id')
                 ->references('id')->on('channels')
                 ->onDelete('cascade')->onUpdate('cascade');
 

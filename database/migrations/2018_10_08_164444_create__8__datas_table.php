@@ -14,10 +14,10 @@ class Create8DatasTable extends Migration
     public function up()
     {
         Schema::create('_8__datas', function (Blueprint $table) {
-            $table->integer('channel_id')->unsigned()->index('channel_id');
+            $table->integer('id')->unsigned()->index('id');
 
-            $table->foreign('channel_id')
-                ->references('channel_id')->on("_7__charts")
+            $table->foreign('id')
+                ->references('id')->on("_7__charts")
                 ->onDelete('cascade')->onUpdate('cascade');
 
             $table->double('value', 15, 8);
