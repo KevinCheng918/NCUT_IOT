@@ -1,0 +1,89 @@
+
+
+/*nav setting*/
+nav.navbar{
+    padding: 0;
+    width: 100%;
+    background-color: #aaaaaa;
+    display:block;
+    min-height: 48px;
+    overflow: hidden;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+nav.navbar a:not(.nav-home):not(.nav-bbtn):not(.dropdown-link){
+    display:block;
+    color: white;
+    text-align: center;
+    font-size: 17px;
+    padding: 31px 14px 10px 14px;
+}
+
+nav.navbar ul,
+nav.navbar li{
+    float: left;
+}
+
+nav.navbar .navbar-home,
+nav.navbar .navbar-menu{
+    padding: 0;
+    display:inline;
+    overflow: hidden;
+}
+
+nav.navbar ul.right{
+    float: right;
+}
+
+nav.navbar ul>li{
+    display:inline-block;
+}
+
+nav.navbar a.nav-home{
+    display:block;
+    color: black;
+    text-align: center;
+    font-size: 17px;
+    padding: 10px 14px;
+}
+nav.navbar .nav-home>i{
+    font-size: 40px;
+}
+nav.navbar .nav-bbtn{
+    display: none;
+    color: white;
+    text-align: center;
+    font-size: 17px;
+    padding: 31px 14px 10px 14px;
+}
+
+
+/*nav trigger*/
+nav.navbar a:not(.nav-home):not(.nav-bbtn):hover{
+    color: black;
+}
+
+
+@media screen and (max-width: 900px){
+    nav.navbar .navbar-menu {
+        display: none;
+    }
+    nav.navbar .trig,
+    nav.navbar .nav-bbtn,
+    nav.navbar .navbar-home{
+        display: block;
+    }
+    nav.navbar .trig>ul{
+        float: none;
+        display: block;
+        text-align: left;
+    }
+    nav.navbar .trig>ul>li{
+        float: none;
+        display: block;
+        text-align: left;
+    }
+    nav.navbar .trig .dropdown-menu{
+        position: relative;
+    }
+}
